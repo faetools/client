@@ -11,7 +11,10 @@ import (
 )
 
 const (
-	form        = "form" // parameter style
+	// parameter styles
+	form   = "form"
+	simple = "simple"
+
 	contentType = "Content-Type"
 	json        = "json"
 
@@ -114,5 +117,7 @@ func AddQueryParam(query url.Values, paramName string, value interface{}) error 
 	return nil
 }
 
-// TODO:
-// - method to http.Method
+// GetPathParam returns the path parameter value.
+func GetPathParam(paramName string, value interface{}) (string, error) {
+	return runtime.StyleParamWithLocation(simple, false, paramName, runtime.ParamLocationPath, value)
+}
