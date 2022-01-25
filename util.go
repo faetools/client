@@ -17,6 +17,9 @@ const (
 
 	// MIMEApplicationJSON defines standard type "application/json"
 	MIMEApplicationJSON = "application/json"
+
+	// ContentType is the header key to define the type of content.
+	ContentType = "Content-Type"
 )
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
