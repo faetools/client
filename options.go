@@ -1,6 +1,8 @@
 package client
 
 import (
+	"context"
+	"net/http"
 	"net/url"
 	"strings"
 )
@@ -24,6 +26,19 @@ func WithRequestEditorFn(fn RequestEditorFn) Option {
 		c.RequestEditors = append(c.RequestEditors, fn)
 		return nil
 	}
+}
+
+// WithBasicAuth adds basic authentication to all requests.
+func WithBasicAuth(username, password string) Option {
+	return WithRequestEditorFn(func(_ context.Context, req *http.Request) error {
+		req.SetBasicAuth(username, password)
+		return nil
+	})
+}
+
+// WithToken adds basic authentication via token to all requests.
+func WithToken(token string) Option {
+	return WithBasicAuth("", token)
 }
 
 // WithBaseURL overrides the baseURL.
