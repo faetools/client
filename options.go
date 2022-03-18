@@ -36,6 +36,18 @@ func WithBasicAuth(username, password string) Option {
 	})
 }
 
+// WithBearer adds authentication via bearer token.
+func WithBearer(bearer string) Option {
+	if !strings.HasPrefix(bearer, "Bearer ") {
+		bearer = "Bearer " + bearer
+	}
+
+	return WithRequestEditorFn(func(_ context.Context, req *http.Request) error {
+		req.Header.Set("Authorization", bearer)
+		return nil
+	})
+}
+
 // WithToken adds basic authentication via token to all requests.
 func WithToken(token string) Option {
 	return WithBasicAuth("", token)
